@@ -1,0 +1,21 @@
+{
+  "ToDoList": [
+    {
+      "id": "1",
+      "caption": "Заголовок задачи",
+      "description": "Описание задачи",
+      "priority": 100,
+      "deadline": "2017-02-12",
+      "complete": "2017-02-19",
+      "status": "done"
+    },
+    {
+      "id": "2",
+      "caption": "Заголовок еще одной задачи",
+      "description": "Описание еще одной задачи",
+      "priority": 10,
+      "deadline": "2022-02-12",
+      "status": "new"
+    }
+  ]
+}

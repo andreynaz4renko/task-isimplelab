@@ -6,6 +6,7 @@ import java.time.LocalDate;
  * // TODO
  */
 public class Task {
+
     private final int id;
     private String caption;
     private String description;
@@ -14,14 +15,16 @@ public class Task {
     private LocalDate completion;
     private TaskStatus status;
 
+
     public Task(int id,
                 String caption,
                 String description,
                 int priority,
                 LocalDate deadline,
-                LocalDate completion) {
-        if (caption != null && caption.length() > 50) {
-            throw new IllegalArgumentException("Заголовок должен быть не длинее 50 символов!");
+                LocalDate completion,
+                TaskStatus status) {
+        if (caption == null || caption.length() > 50) {
+            throw new IllegalArgumentException("Заголовок должен быть не длиннее 50 символов!");
         }
         if (priority < 0 || priority > 10) {
             throw new IllegalArgumentException("Приоритет должен быть в диапазоне от 0 до 10 включительно");
@@ -32,17 +35,15 @@ public class Task {
         this.priority = priority;
         this.deadline = deadline;
         this.completion = completion;
-        this.status = TaskStatus.NEW;
+        this.status = status;
     }
 
-    public Task(int id) {
-        this.id = id;
-        this.caption = null;
-        this.description = null;
-        this.priority = 0;
-        this.deadline = null;
-        this.completion = null;
-        this.status = TaskStatus.NEW;
+    public Task(int id,
+                String caption,
+                String description,
+                int priority,
+                LocalDate deadline) {
+        this(id, caption, description, priority, deadline, null, TaskStatus.NEW);
     }
 
     public int getId() {
@@ -96,4 +97,16 @@ public class Task {
     public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
     }
+
+    @Override
+    public String toString() {
+        return "Task ID: " + id +
+                "\nCaption: " + caption +
+                "\nDescription: " + description +
+                "\nPriority: " + priority +
+                "\nDeadline: " + deadline +
+                "\nCompletion Date: " + completion +
+                "\nStatus: " + status;
+    }
+
 }

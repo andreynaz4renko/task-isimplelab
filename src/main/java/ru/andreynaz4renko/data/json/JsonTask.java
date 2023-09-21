@@ -1,14 +1,13 @@
-package ru.andreynaz4renko.data.xml;
+package ru.andreynaz4renko.data.json;
 
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import ru.andreynaz4renko.converters.LocalDateAdapter;
+import ru.andreynaz4renko.data.xml.XmlTaskStatus;
 
 import java.time.LocalDate;
 
-@XmlRootElement(name = "Task")
-@XmlAccessorType(XmlAccessType.FIELD)
-public class XmlTask {
+public class JsonTask {
     @XmlAttribute
     private int id;
     @XmlAttribute
@@ -24,17 +23,17 @@ public class XmlTask {
     @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
     private LocalDate completion;
     @XmlElement(name = "Status")
-    private XmlTaskStatus status;
+    private JsonTaskStatus status;
 
-    public XmlTask() { }
+    public JsonTask() { }
 
-    public XmlTask(int id,
+    public JsonTask(int id,
                    String caption,
                    String description,
                    int priority,
                    LocalDate deadline,
                    LocalDate completion,
-                   XmlTaskStatus status) {
+                   JsonTaskStatus status) {
         this.id = id;
         this.caption = caption;
         this.description = description;
@@ -92,11 +91,12 @@ public class XmlTask {
         this.completion = completion;
     }
 
-    public XmlTaskStatus getStatus() {
+    public JsonTaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(XmlTaskStatus status) {
+    public void setStatus(JsonTaskStatus status) {
         this.status = status;
     }
 }
+
