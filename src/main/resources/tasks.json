@@ -1,16 +1,16 @@
 {
   "ToDoList": [
     {
-      "id": "1",
+      "id": 1,
       "caption": "Заголовок задачи",
       "description": "Описание задачи",
-      "priority": 100,
+      "priority": 10,
       "deadline": "2017-02-12",
-      "complete": "2017-02-19",
+      "completion": "2017-02-19",
       "status": "done"
     },
     {
-      "id": "2",
+      "id": 2,
       "caption": "Заголовок еще одной задачи",
       "description": "Описание еще одной задачи",
       "priority": 10,

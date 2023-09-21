@@ -1,18 +1,33 @@
-package ru.andreynaz4renko.domain;
+package ru.andreynaz4renko.data;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.NotNull;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Класс TaskList представляет собой список задач, хранящий набор объектов типа Task.
+ * Класс {@link TaskList} представляет собой список задач, хранящий набор объектов типа {@link Task}.
  * Этот класс предоставляет методы для добавления, удаления и выполнения задач.
+ *
+ * @see Task
  */
+@XmlRootElement(name = "ToDoList")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class TaskList {
 
     /**
-     * Список задач, представленных в виде коллекции объектов Task.
+     * Список задач, представленных в виде коллекции объектов {@link Task}.
+     *
+     * @see Task
      */
+    @XmlElement(name = "Task")
+    @JsonProperty("ToDoList")
     private final List<Task> tasks;
 
     /**
@@ -26,8 +41,9 @@ public class TaskList {
      * Конструктор, принимающий список задач для инициализации.
      *
      * @param tasks Список задач.
+     * @see Task
      */
-    public TaskList(List<Task> tasks) {
+    public TaskList(@NotNull List<Task> tasks) {
         this.tasks = tasks;
     }
 
@@ -36,9 +52,13 @@ public class TaskList {
      *
      * @param task Задача для добавления.
      * @return true, если задача успешно добавлена в список, в противном случае - false.
+     * @see Task
      */
-    public boolean addTask(Task task) {
-        return tasks.add(task);
+    public boolean addTask(@NotNull Task task) {
+        if (tasks.stream().noneMatch(t -> t.getId() == task.getId())) {
+            return tasks.add(task);
+        }
+        return false;
     }
 
     /**
@@ -56,7 +76,7 @@ public class TaskList {
      *
      * @param id Идентификатор задачи для пометки как выполненной.
      * @return true, если задача с указанным идентификатором была успешно помечена как выполненная,
-     *         в противном случае - false.
+     * в противном случае - false.
      */
     public boolean completeTask(int id) {
         return tasks.stream()
@@ -74,6 +94,7 @@ public class TaskList {
      * Возвращает список задач.
      *
      * @return Список задач.
+     * @see Task
      */
     public List<Task> getTasks() {
         return tasks;
