@@ -199,12 +199,28 @@ public class Task {
                 "\nStatus: " + status;
     }
 
+    /**
+     * Проверяет допустимость значения приоритета задачи.
+     *
+     * @param priority Приоритет задачи, который нужно проверить.
+     * @throws InvalidPriorityException Если приоритет не находится в диапазоне от 0 до 10 (включительно),
+     *                                  генерируется исключение {@link InvalidPriorityException} с сообщением об ошибке.
+     * @see InvalidPriorityException
+     */
     private static void validatePriority(int priority) throws InvalidPriorityException {
         if (priority < 0 || priority > 10) {
             throw new InvalidPriorityException("Priority must be in the range from 0 to 10 inclusive!");
         }
     }
 
+    /**
+     * Проверяет допустимость значения заголовка задачи.
+     *
+     * @param caption Заголовок задачи, который нужно проверить.
+     * @throws InvalidCaptionException Если заголовок равен {@code null} или его длина превышает 50 символов,
+     *                                 генерируется исключение {@link InvalidCaptionException} с сообщением об ошибке.
+     * @see InvalidCaptionException
+     */
     private static void validateCaption(String caption) throws InvalidCaptionException {
         if (caption == null || caption.length() > 50) {
             throw new InvalidCaptionException("Caption must be no longer than 50 characters!");

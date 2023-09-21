@@ -51,7 +51,7 @@ public class TaskList {
      * Добавляет задачу в список.
      *
      * @param task Задача для добавления.
-     * @return true, если задача успешно добавлена в список, в противном случае - false.
+     * @return {@code true}, если задача успешно добавлена в список, в противном случае - {@code false}.
      * @see Task
      */
     public boolean addTask(@NotNull Task task) {
@@ -65,7 +65,8 @@ public class TaskList {
      * Удаляет задачу из списка по ее идентификатору.
      *
      * @param id Идентификатор задачи для удаления.
-     * @return true, если задача с указанным идентификатором была успешно удалена, в противном случае - false.
+     * @return {@code true}, если задача с указанным идентификатором была успешно удалена,
+     * в противном случае - {@code false}.
      */
     public boolean removeTask(int id) {
         return tasks.removeIf(task -> task.getId() == id);
@@ -75,8 +76,8 @@ public class TaskList {
      * Помечает задачу с указанным идентификатором как выполненную и устанавливает дату завершения.
      *
      * @param id Идентификатор задачи для пометки как выполненной.
-     * @return true, если задача с указанным идентификатором была успешно помечена как выполненная,
-     * в противном случае - false.
+     * @return {@code true}, если задача с указанным идентификатором была успешно помечена как выполненная,
+     * в противном случае - {@code false}.
      */
     public boolean completeTask(int id) {
         return tasks.stream()
