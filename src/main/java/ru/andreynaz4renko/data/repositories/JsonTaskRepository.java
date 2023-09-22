@@ -76,7 +76,7 @@ public class JsonTaskRepository extends TaskRepository {
                     .readValue(FileUtils.readFileToString(file, StandardCharsets.UTF_8));
             return true;
         } catch (Exception e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         }
         return false;
     }
@@ -93,7 +93,7 @@ public class JsonTaskRepository extends TaskRepository {
                     .writeValueAsString(tasks));
             return true;
         } catch (Exception e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         }
         return false;
     }

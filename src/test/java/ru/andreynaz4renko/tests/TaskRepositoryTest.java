@@ -1,11 +1,14 @@
-package ru.andreynaz4renko.data;
+package ru.andreynaz4renko.tests;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import ru.andreynaz4renko.data.Task;
+import ru.andreynaz4renko.data.TaskStatus;
 import ru.andreynaz4renko.data.repositories.RestTaskRepository;
 import ru.andreynaz4renko.data.repositories.TaskRepository;
+import ru.andreynaz4renko.repositories.RepositoryProvider;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,8 +18,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static ru.andreynaz4renko.data.RepositoryProvider.JSON_FILEPATH;
-import static ru.andreynaz4renko.data.RepositoryProvider.XML_FILEPATH;
+import static ru.andreynaz4renko.repositories.RepositoryProvider.JSON_FILEPATH;
+import static ru.andreynaz4renko.repositories.RepositoryProvider.XML_FILEPATH;
 
 public class TaskRepositoryTest {
 

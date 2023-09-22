@@ -1,7 +1,10 @@
-package ru.andreynaz4renko.data;
+package ru.andreynaz4renko.tests;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.andreynaz4renko.data.Task;
+import ru.andreynaz4renko.data.TaskList;
+import ru.andreynaz4renko.data.TaskStatus;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

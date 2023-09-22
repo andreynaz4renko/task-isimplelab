@@ -81,7 +81,7 @@ public class XmlTaskRepository extends TaskRepository {
             tasks = (TaskList) unmarshaller.unmarshal(reader);
             return true;
         } catch (Exception e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         }
         return false;
     }
@@ -97,7 +97,7 @@ public class XmlTaskRepository extends TaskRepository {
             marshaller.marshal(tasks, writer);
             return true;
         } catch (Exception e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         }
         return false;
     }

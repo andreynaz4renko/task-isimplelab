@@ -85,7 +85,7 @@ public class RestTaskRepository extends TaskRepository {
                 }
             }
         } catch (Exception e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         }
         return false;
     }
@@ -110,7 +110,7 @@ public class RestTaskRepository extends TaskRepository {
                 }
             }
         } catch (Exception e) {
-            System.err.println(e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         }
         return false;
     }

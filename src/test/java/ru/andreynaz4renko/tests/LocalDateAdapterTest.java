@@ -1,4 +1,4 @@
-package ru.andreynaz4renko.data;
+package ru.andreynaz4renko.tests;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

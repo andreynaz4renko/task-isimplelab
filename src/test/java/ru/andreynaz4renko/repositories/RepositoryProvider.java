@@ -1,4 +1,4 @@
-package ru.andreynaz4renko.data;
+package ru.andreynaz4renko.repositories;
 
 import jakarta.xml.bind.JAXBException;
 import org.junit.jupiter.api.extension.ExtensionContext;

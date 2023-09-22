@@ -25,8 +25,8 @@ public class Main {
         // repository = new RestTaskRepository("https://mocki.io/v1/6aed3f0b-9334-44b9-87ed-489f5559b0b5");
 
         if (repository != null) {
-            TaskManager taskManager = new TaskManager(repository);
-            taskManager.run();
+            CommandManager commandManager = new CommandManager(repository);
+            commandManager.run();
         } else {
             throw new FileNotFoundException("Resource file for repository not found!");
         }
