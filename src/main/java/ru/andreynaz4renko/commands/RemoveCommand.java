@@ -1,21 +1,31 @@
-package ru.andreynaz4renko.views.commands;
+package ru.andreynaz4renko.commands;
 
 import ru.andreynaz4renko.data.repositories.TaskRepository;
 
 import java.util.List;
 
+/**
+ * Класс RemoveCommand представляет команду для удаления задачи из репозитория.
+ * Эта команда позволяет удалить задачу по её идентификатору.
+ */
 public class RemoveCommand extends RepositoryCommand {
 
     public RemoveCommand(TaskRepository repository) {
         super(repository);
-        help = "remove [id]        - Remove a task";
+        this.help = "remove [id]        - Remove a task";
+        this.argsCountList = List.of(1);
     }
 
+    /**
+     * Выполняет команду удаления задачи на основе переданных аргументов.
+     *
+     * @param args Список аргументов команды. Должен содержать идентификатор задачи.
+     * @return {@link true}, если задача успешно удалена, в противном случае - {@link false}.
+     */
     @Override
     public boolean execute(List<String> args) {
         if (args == null) {
-            System.out.println("The task cannot be removed. " +
-                    "Make sure you have entered a task id.");
+            System.out.println("The task cannot be removed. Make sure you have entered a task id.");
             return false;
         }
         try {

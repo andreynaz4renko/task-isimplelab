@@ -1,25 +1,36 @@
-package ru.andreynaz4renko.views.commands;
+package ru.andreynaz4renko.commands;
 
 import ru.andreynaz4renko.data.repositories.TaskRepository;
 
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Класс EditCommand представляет команду для редактирования существующей задачи в репозитории.
+ * Эта команда позволяет изменить параметры задачи по её идентификатору.
+ */
 public class EditCommand extends RepositoryCommand {
 
-    public EditCommand(TaskRepository repository) {
+    public EditCommand(TaskRepository repository, Scanner scanner) {
         super(repository);
         help = "edit [id]          - Edit an existing task";
+        argsCountList = List.of(1);
+        this.scanner = scanner;
     }
 
+    /**
+     * Выполняет команду редактирования задачи на основе переданных аргументов.
+     *
+     * @param args Список аргументов команды. Должен содержать идентификатор задачи.
+     * @return {@code true}, если задача успешно отредактирована; в противном случае - {@code false}.
+     */
     @Override
     public boolean execute(List<String> args) {
         if (args == null) {
-            System.out.println("The task cannot be edited. " +
-                    "Make sure you have entered a task id.");
+            System.out.println("The task cannot be edited. Make sure you have entered a task id.");
             return false;
         }
-        try (Scanner scanner = new Scanner(System.in)) {
+        try {
             if (args.size() == 1) {
                 int id = Integer.parseInt(args.get(0));
                 if (repository.isTaskExists(id)) {

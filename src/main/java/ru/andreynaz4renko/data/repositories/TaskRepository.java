@@ -1,6 +1,6 @@
 package ru.andreynaz4renko.data.repositories;
 
-import com.sun.istack.NotNull;
+import org.jetbrains.annotations.NotNull;
 import ru.andreynaz4renko.data.Task;
 import ru.andreynaz4renko.data.TaskList;
 import ru.andreynaz4renko.data.exceptions.InvalidCaptionException;
@@ -79,6 +79,31 @@ public abstract class TaskRepository {
      */
     public boolean addTask(@NotNull Task task) {
         return tasks.addTask(task);
+    }
+
+    /**
+     * Добавляет задачу в список задач.
+     *
+     * @param id          Идентификатор задачи.
+     * @param caption     Заголовок задачи (не более 50 символов).
+     * @param description Описание задачи.
+     * @param priority    Приоритет задачи [0; 10].
+     * @param deadline    Дедлайн задачи.
+     * @return {@code true}, если задача успешно добавлена, в противном случае - {@code false}.
+     * @throws InvalidCaptionException  Если {@code caption} не удовлетворяет условию.
+     * @throws InvalidPriorityException Если {@code priority} не удовлетворяет условию.
+     * @see Task
+     */
+    public boolean addTask(int id,
+                           String caption,
+                           String description,
+                           int priority,
+                           LocalDate deadline) throws InvalidCaptionException, InvalidPriorityException {
+        return tasks.addTask(new Task(id,
+                caption,
+                description,
+                priority,
+                deadline));
     }
 
     /**

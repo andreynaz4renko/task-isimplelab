@@ -1,66 +1,44 @@
 package ru.andreynaz4renko.data;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import jakarta.xml.bind.annotation.*;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import ru.andreynaz4renko.converters.LocalDateAdapter;
-import ru.andreynaz4renko.converters.LocalDateDeserializer;
-import ru.andreynaz4renko.converters.LocalDateSerializer;
 import ru.andreynaz4renko.data.exceptions.InvalidCaptionException;
 import ru.andreynaz4renko.data.exceptions.InvalidPriorityException;
 
 import java.time.LocalDate;
 
 /**
- * Класс {@link Task} представляет собой модель задачи с различными атрибутами, такими как идентификатор, заголовок,
- * описание, приоритет, срок выполнения и статус. Этот класс также используется в контексте JAXB и Jackson для
- * сериализации и десериализации задачи в и из форматов XML и JSON.
+ * Класс {@link Task} представляет собой модель задачи с различными атрибутами, такими как
+ * идентификатор, заголовок, описание, приоритет, срок выполнения и статус.
  */
-@XmlRootElement(name = "Task")
-@XmlAccessorType(XmlAccessType.FIELD)
 public class Task {
 
     /**
      * Идентификатор задачи.
      */
-    @XmlAttribute
     private int id;
 
     /**
      * Заголовок задачи.
      */
-    @XmlAttribute
     private String caption;
 
     /**
      * Описание задачи.
      */
-    @XmlElement(name = "Description")
     private String description;
 
     /**
      * Приоритет задачи (от 0 до 10).
      */
-    @XmlElement(name = "Priority")
     private int priority;
 
     /**
      * Срок выполнения задачи.
      */
-    @XmlElement(name = "Deadline")
-    @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate deadline;
 
     /**
      * Дата завершения задачи.
      */
-    @XmlElement(name = "Complete")
-    @XmlJavaTypeAdapter(value = LocalDateAdapter.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate completion;
 
     /**
@@ -68,7 +46,6 @@ public class Task {
      *
      * @see TaskStatus
      */
-    @XmlElement(name = "Status")
     private TaskStatus status;
 
     /**

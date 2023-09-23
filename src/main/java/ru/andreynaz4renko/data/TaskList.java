@@ -1,11 +1,7 @@
 package ru.andreynaz4renko.data;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.NotNull;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,8 +13,6 @@ import java.util.List;
  *
  * @see Task
  */
-@XmlRootElement(name = "ToDoList")
-@XmlAccessorType(XmlAccessType.FIELD)
 public class TaskList {
 
     /**
@@ -26,8 +20,6 @@ public class TaskList {
      *
      * @see Task
      */
-    @XmlElement(name = "Task")
-    @JsonProperty("ToDoList")
     private final List<Task> tasks;
 
     /**

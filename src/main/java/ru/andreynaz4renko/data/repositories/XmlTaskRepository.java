@@ -1,15 +1,21 @@
 package ru.andreynaz4renko.data.repositories;
 
-import com.sun.istack.NotNull;
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.Marshaller;
-import jakarta.xml.bind.Unmarshaller;
-import ru.andreynaz4renko.data.Task;
-import ru.andreynaz4renko.data.TaskList;
+import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Document;
 
-import java.io.FileReader;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.FileInputStream;
 import java.io.FileWriter;
+
+import static ru.andreynaz4renko.converters.XmlTaskConverter.getTaskListFromDocument;
+import static ru.andreynaz4renko.converters.XmlTaskConverter.tasksToTaskNodeList;
 
 /**
  * Класс XmlTaskRepository представляет собой репозиторий задач, способный сохранять и загружать задачи в формате XML.
@@ -24,15 +30,8 @@ public class XmlTaskRepository extends TaskRepository {
      */
     private final String filepath;
 
-    /**
-     * Объект Marshaller для маршализации задач в XML формат.
-     */
-    private final Marshaller marshaller;
+    private final DocumentBuilder builder;
 
-    /**
-     * Объект Unmarshaller для демаршализации задач из XML формата.
-     */
-    private final Unmarshaller unmarshaller;
 
     /**
      * Конструктор класса {@link XmlTaskRepository}.
@@ -58,27 +57,23 @@ public class XmlTaskRepository extends TaskRepository {
      * }</pre>
      *
      * @param filepath Путь к файлу, в котором хранятся задачи в формате XML.
-     * @throws JAXBException В случае ошибки при инициализации {@link JAXBContext}.
-     * @see JAXBContext
-     * @see JAXBException
      */
-    public XmlTaskRepository(@NotNull String filepath) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(TaskList.class, Task.class);
-        this.marshaller = context.createMarshaller();
-        this.marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        this.unmarshaller = context.createUnmarshaller();
+    public XmlTaskRepository(@NotNull String filepath) throws ParserConfigurationException {
         this.filepath = filepath;
+
+        this.builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
     }
 
     /**
      * Загружает задачи из файла в формате XML и преобразует их в список задач.
      *
-     * @return true, если задачи успешно загружены, в противном случае - false.
+     * @return {@code true}, если задачи успешно загружены, в противном случае - {@code false}.
      */
     @Override
     public boolean loadTasks() {
-        try (FileReader reader = new FileReader(filepath)) {
-            tasks = (TaskList) unmarshaller.unmarshal(reader);
+        try (FileInputStream reader = new FileInputStream(filepath)) {
+            Document document = builder.parse(reader);
+            tasks = getTaskListFromDocument(document);
             return true;
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());
@@ -89,12 +84,21 @@ public class XmlTaskRepository extends TaskRepository {
     /**
      * Сохраняет список задач в формате XML в указанный файл.
      *
-     * @return true, если задачи успешно сохранены, в противном случае - false.
+     * @return {@code true}, если задачи успешно сохранены, в противном случае - {@code false}.
      */
     @Override
     public boolean saveTasks() {
-        try (FileWriter writer = new FileWriter(filepath)) {
-            marshaller.marshal(tasks, writer);
+        try {
+            Document document = builder.newDocument();
+            DOMSource domSource = new DOMSource(tasksToTaskNodeList(tasks, document));
+            try (FileWriter fileWriter = new FileWriter(filepath)) {
+                StreamResult streamResult = new StreamResult(fileWriter);
+
+                Transformer transformer = TransformerFactory.newInstance().newTransformer();
+                transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                transformer.transform(domSource, streamResult);
+            }
             return true;
         } catch (Exception e) {
             System.out.println(e.getLocalizedMessage());

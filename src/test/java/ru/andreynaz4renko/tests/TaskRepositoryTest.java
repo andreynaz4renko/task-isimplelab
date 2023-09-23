@@ -6,9 +6,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import ru.andreynaz4renko.data.Task;
 import ru.andreynaz4renko.data.TaskStatus;
-import ru.andreynaz4renko.data.repositories.RestTaskRepository;
 import ru.andreynaz4renko.data.repositories.TaskRepository;
-import ru.andreynaz4renko.repositories.RepositoryProvider;
+import ru.andreynaz4renko.providers.RepositoryProvider;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,33 +17,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static ru.andreynaz4renko.repositories.RepositoryProvider.JSON_FILEPATH;
-import static ru.andreynaz4renko.repositories.RepositoryProvider.XML_FILEPATH;
+import static ru.andreynaz4renko.providers.RepositoryProvider.XML_FILEPATH;
 
 public class TaskRepositoryTest {
-
-    private static final String JSON_CONTENT = "{\n" +
-            "  \"ToDoList\": [\n" +
-            "    {\n" +
-            "      \"id\": 1,\n" +
-            "      \"caption\": \"Test Task 1\",\n" +
-            "      \"description\": \"Description 1\",\n" +
-            "      \"priority\": 5,\n" +
-            "      \"deadline\": \"" + LocalDate.now() + "\",\n" +
-            "      \"completion\": null,\n" +
-            "      \"status\": \"new\"\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"id\": 2,\n" +
-            "      \"caption\": \"Test Task 2\",\n" +
-            "      \"description\": \"Description 2\",\n" +
-            "      \"priority\": 3,\n" +
-            "      \"deadline\": \"" + LocalDate.now() + "\",\n" +
-            "      \"completion\": null,\n" +
-            "      \"status\": \"new\"\n" +
-            "    }\n" +
-            "  ]\n" +
-            "}";
 
     private static final String XML_CONTENT = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
             "<ToDoList>\n" +
@@ -52,7 +27,7 @@ public class TaskRepositoryTest {
             "        <Description>Description 1</Description>\n" +
             "        <Priority>5</Priority>\n" +
             "        <Deadline>" + LocalDate.now() + "</Deadline>\n" +
-            "        <Complete>null</Complete>\n" +
+            "        <Complete>" + LocalDate.now() + "</Complete>\n" +
             "        <Status>NEW</Status>\n" +
             "    </Task>\n" +
             "    <Task id=\"2\" caption=\"Test Task 2\">\n" +
@@ -78,7 +53,6 @@ public class TaskRepositoryTest {
     @AfterEach
     public void cleanup() {
         deleteTestFile(XML_FILEPATH);
-        deleteTestFile(JSON_FILEPATH);
     }
 
     @ParameterizedTest
@@ -182,10 +156,6 @@ public class TaskRepositoryTest {
     @ParameterizedTest
     @ArgumentsSource(RepositoryProvider.class)
     public void testSaveTasks(TaskRepository repository) {
-        if (repository instanceof RestTaskRepository) {
-            // TODO: Убрать блок при возможности проверить POST
-            return;
-        }
 
         repository.addTask(task1);
         repository.addTask(task2);
@@ -209,7 +179,6 @@ public class TaskRepositoryTest {
 
     private void createTestFiles() throws IOException {
         Files.write(Paths.get(XML_FILEPATH), XML_CONTENT.getBytes());
-        Files.write(Paths.get(JSON_FILEPATH), JSON_CONTENT.getBytes());
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
